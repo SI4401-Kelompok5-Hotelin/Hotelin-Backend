@@ -51,8 +51,14 @@ func Setup(app *fiber.App) {
 	userDetail.Get("", user.UserDetail)
 	userDetail.Put("/change", user.ChangeProfile)
 
-	balance := api.Group("/balance")
-	balance.Post("", user.TopUpBalance)
+	balance := api.Group("/balance").Use(middleware.AuthUser(middleware.Config{
+		Unauthorized: func(c *fiber.Ctx) error {
+			return c.Status(401).JSON(fiber.Map{
+				"message": "Unauthorized",
+			})
+		},
+	}))
+	balance.Post("/topup", user.TopUpBalance)
 	balance.Get("", user.GetBalance)
 
 	// ================== End User =======================
