@@ -8,16 +8,16 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/joho/godotenv"
+	// "github.com/joho/godotenv"
 )
 
 func main() {
 	// Load .env file
-	err := godotenv.Load(".env")
+	// err := godotenv.Load(".env")
 
-	if err != nil {
-		panic("Error loading .env file")
-	}
+	// if err != nil {
+	// 	panic("Error loading .env file")
+	// }
 
 	// Connect to database
 	database.Connect(&database.Config{
@@ -40,7 +40,7 @@ func main() {
 	}))
 
 	routes.Setup(app)
-	err = app.Listen(":" + os.Getenv("PORT"))
+	err := app.Listen(":" + os.Getenv("PORT"))
 
 	if err != nil {
 		panic(err)
