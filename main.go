@@ -7,7 +7,7 @@ import (
 	"Hotelin-BE/internal/routes"
 
 	"github.com/gofiber/fiber/v2"
-	// "github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	// "github.com/joho/godotenv"
 )
 
@@ -32,12 +32,12 @@ func main() {
 	// Create Fiber app
 	app := fiber.New()
 
-	// app.Use(cors.New(cors.Config{
-	// 	AllowOrigins:     "*",
-	// 	AllowHeaders:     "Token, Type",
-	// 	AllowMethods:     "GET, POST, PUT, DELETE, OPTIONS",
-	// 	AllowCredentials: true,
-	// }))
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "*",
+		AllowHeaders:     "Token, Type",
+		AllowMethods:     "GET, POST, PUT, DELETE, OPTIONS",
+		AllowCredentials: true,
+	}))
 
 	routes.Setup(app)
 	err := app.Listen(":" + os.Getenv("PORT"))
