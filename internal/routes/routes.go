@@ -31,13 +31,7 @@ func Setup(app *fiber.App) {
 	}))
 	logoutUser.Post("", user.Logout)
 
-	hotelAPI := api.Group("/hotel").Use(middleware.AuthUser(middleware.Config{
-		Unauthorized: func(c *fiber.Ctx) error {
-			return c.Status(401).JSON(fiber.Map{
-				"message": "Unauthorized",
-			})
-		},
-	}))
+	hotelAPI := api.Group("/hotel")
 	hotelAPI.Get("", admin.ShowAllHotel)
 	hotelAPI.Get("/detail", hotel.GetHotelByID)
 
