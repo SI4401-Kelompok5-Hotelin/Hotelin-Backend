@@ -55,7 +55,9 @@ func CreateBooking(c *fiber.Ctx) error {
 	booking := models.Booking{
 		UserID:			user.UserID,
 		HotelID:		req.HotelID,
+		HotelName:	hotel.Name,
 		RoomID:			req.RoomID,
+		RoomName:		room.Name,
 		Covid:			req.Covid,
 		TotalPrice:	totalPrice,
 		CheckIn:		req.CheckIn,
@@ -136,4 +138,46 @@ func DeleteBooking(c *fiber.Ctx) error {
 	return c.Status(http.StatusOK).JSON(fiber.Map{
 		"message": "Booking deleted",
 	})
+}
+
+func ShowAllBooking(c *fiber.Ctx) error {
+	user := c.Locals("user").(models.UserToken)
+
+	booking := []models.Booking{}
+
+	err := database.DB.Where("user_id = ?", user.UserID).Find(&booking).Error
+
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Failed to get cart list",
+		})
+	}
+
+	bookingResponse := []models.BookingResponse{}
+
+	for _, booking := range booking {
+		bookingResponse = append(bookingResponse, models.BookingResponse{
+		ID:					booking.ID,
+		HotelName:	booking.HotelName,
+		RoomName:		booking.RoomName,
+		Duration:		booking.Duration,
+		TotalPrice:	booking.TotalPrice,
+		CheckIn:		booking.CheckIn,
+		CheckOut:		booking.CheckOut,
+		})
+	}
+
+	if len(bookingResponse) == 0 {
+		return c.Status(http.StatusOK).JSON(fiber.Map{
+			"message": "Booking is empty",
+			"status":  "success",
+			"data":    []string{},
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"message": "Booking found",
+		"data":    bookingResponse,
+	})
+
 }

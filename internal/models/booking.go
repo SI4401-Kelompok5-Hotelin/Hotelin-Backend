@@ -12,8 +12,10 @@ type Booking struct {
 		UserID 			string		`json:"user_id"`
 		User				User			`json:"user" gorm:"foreignKey:UserID"`
 		HotelID			string		`json:"hotel_id"`
+		HotelName		string		`json:"hotel_name"`
 		Hotel				Hotel			`json:"hotel" gorm:"foreignKey:HotelID"`
 		RoomID			string		`json:"room_id"`
+		RoomName		string		`json:"room_name"`
 		Room				Room			`json:"room" gorm:"foreignKey:RoomID"`
 		Covid				string		`json:"covid"`
 		TotalPrice	float64		`json:"total_price"`
