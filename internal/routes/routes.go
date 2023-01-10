@@ -31,9 +31,9 @@ func Setup(app *fiber.App) {
 	}))
 	logoutUser.Post("", user.Logout)
 
-	hotelAPI := api.Group("/hotel")
+	hotelAPI := api.Group("/hotels")
 	hotelAPI.Get("", admin.ShowAllHotel)
-	hotelAPI.Get("/detail", hotel.GetHotelByID)
+	hotelAPI.Get("/details", hotel.GetHotelByID)
 
 	userDetail := api.Group("/profile").Use(middleware.AuthUser(middleware.Config{
 		Unauthorized: func(c *fiber.Ctx) error {
