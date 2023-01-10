@@ -55,6 +55,15 @@ func Setup(app *fiber.App) {
 	balance.Post("/topup", user.TopUpBalance)
 	balance.Get("", user.GetBalance)
 
+	booking := api.Group("/booking").Use(middleware.AuthUser(middleware.Config{
+		Unauthorized: func(c *fiber.Ctx) error {
+			return c.Status(401).JSON(fiber.Map{
+				"message": "Unauthorized",
+			})
+		},
+	}))
+	booking.Post("/create", user.CreateBooking)
+
 	// ================== End User =======================
 
 	// =================== Admin =========================

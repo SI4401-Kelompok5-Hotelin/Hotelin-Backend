@@ -22,18 +22,30 @@ func TopUpBalance(c *fiber.Ctx) error {
 
 	err := database.DB.Where("user_id = ?", user.UserID).First(&balance).Error
 	if err != nil {
-		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-			"message": "User not found",
-		})
-	}
+		// if user id is not found, create new user balance
+		balance = models.UserBalance{
+			UserID:  user.UserID,
+			Balance: req.Balance,
+		}
 
-	balance.Balance = balance.Balance + req.Balance
+		err = database.DB.Create(&balance).Error
 
-	err = database.DB.Save(&balance).Error
-	if err != nil {
-		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
-			"message": "Internal server error",
-		})
+		if err != nil {
+			return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+				"message": "Failed to create balance",
+			})
+		}
+	} else {
+		// if user id is found, update balance
+		balance.Balance += req.Balance
+
+		err = database.DB.Save(&balance).Error
+
+		if err != nil {
+			return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+				"message": "Failed to update balance",
+			})
+		}
 	}
 
 	return c.Status(http.StatusOK).JSON(fiber.Map{

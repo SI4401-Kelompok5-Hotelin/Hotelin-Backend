@@ -12,7 +12,6 @@ type Hotel struct {
 	Phone   	string 		`json:"phone"`
 	Address 	string 		`json:"address"`
 	Rating		string		`json:"rating"`
-	ListRoom 	[]Room		`json:"list_room" gorm:"foreignKey:RoomID"`	
 }
 
 func (s *Hotel) BeforeCreate(tx *gorm.DB) (err error) {
@@ -35,5 +34,4 @@ type HotelResponse struct {
 	Phone   	string `json:"phone"`
 	Address 	string `json:"address"`
 	Rating		string `json:"rating"`
-	ListRoom	
 }

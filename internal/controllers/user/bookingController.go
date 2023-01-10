@@ -18,8 +18,23 @@ func CreateBooking(c *fiber.Ctx) error {
 		})
 	}
 
-	var room models.Room
 	var hotel models.Hotel
+
+	err := database.DB.Where("hotel_id = ?", req.HotelID).First(&hotel).Error
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"message": "Failed to create booking",
+		})
+	}
+	
+	var room models.Room
+
+	err = database.DB.Where("room_id = ?", req.RoomID).First(&room).Error
+	if err != nil {
+		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
+			"message": "Failed to create booking",
+		})
+	}
 
 	var additionalPrice float64
 
@@ -35,19 +50,17 @@ func CreateBooking(c *fiber.Ctx) error {
 
 	var totalPrice float64
 
-	for _, roomPrice := range room {
-		totalPrice += roomPrice.TotalPrice + additionalPrice
-	}
+	totalPrice += room.Price + additionalPrice
 
 	booking := models.Booking{
-						UserID:			user.UserID,
-						HotelID:		req.HotelID,
-						RoomID:			req.RoomID,
-						Covid:			req.Covid,
-						TotalPrice:	totalPrice,
-						CheckIn:		req.CheckIn,
-						CheckOut		req.CheckOut,
-						Duration:		req.Duration,
+		UserID:			user.UserID,
+		HotelID:		req.HotelID,
+		RoomID:			req.RoomID,
+		Covid:			req.Covid,
+		TotalPrice:	totalPrice,
+		CheckIn:		req.CheckIn,
+		CheckOut:		req.CheckOut,
+		Duration:		req.Duration,
 	}
 
 	var userBalance models.UserBalance
@@ -87,6 +100,16 @@ func CreateBooking(c *fiber.Ctx) error {
 
 	bookingResponse := models.BookingResponse{
 		ID:					booking.ID,
-		HotelName:	booking.
+		HotelName:	hotel.Name,
+		RoomName:		room.Name,
+		Duration:		booking.Duration,
+		TotalPrice:	booking.TotalPrice,
+		CheckIn:		booking.CheckIn,
+		CheckOut:		booking.CheckOut,
 	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"message": "Booking created",
+		"data":    bookingResponse,
+	})
 }

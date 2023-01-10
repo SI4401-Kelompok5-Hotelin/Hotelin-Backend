@@ -17,9 +17,9 @@ type Booking struct {
 		Room				Room			`json:"room" gorm:"foreignKey:RoomID"`
 		Covid				string		`json:"covid"`
 		TotalPrice	float64		`json:"total_price"`
+		Duration		string		`json:"duration"`
 		CheckIn			time.Time	`json:"check_in"`
 		CheckOut		time.Time	`json:"check_out"`
-		Duration		string		`json:"duration"`
 		CreatedAt		time.Time	`json:"created_at"`
 }
 
