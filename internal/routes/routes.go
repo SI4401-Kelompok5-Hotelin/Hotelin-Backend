@@ -66,6 +66,25 @@ func Setup(app *fiber.App) {
 	booking.Post("/create", user.CreateBooking)
 	booking.Delete("/delete", user.DeleteBooking)
 
+	room := api.Group("/rooms").Use(middleware.AuthUser(middleware.Config{
+		Unauthorized: func(c *fiber.Ctx) error {
+			return c.Status(401).JSON(fiber.Map{
+				"message": "Unauthorized",
+			})
+		},
+	}))
+	room.Get("", hotel.GetRoomByHotelID)
+
+	review := api.Group("/review").Use(middleware.AuthUser(middleware.Config{
+		Unauthorized: func(c *fiber.Ctx) error {
+			return c.Status(401).JSON(fiber.Map{
+				"message": "Unauthorized",
+			})
+		},
+	}))
+	review.Post("/create", user.CreateReview)
+	review.Get("", user.GetReview)
+
 	// ================== End User =======================
 
 	// =================== Admin =========================

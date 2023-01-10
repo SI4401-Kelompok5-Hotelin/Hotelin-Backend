@@ -41,6 +41,7 @@ type BookingRequest struct {
 
 type BookingResponse struct {
 		ID					string		`json:"id"`
+		HotelID			string		`json:"hotel_id"`
 		HotelName		string		`json:"hotel_name"`
 		RoomName		string		`json:"room_name"`
 		Duration		int				`json:"duration"`
