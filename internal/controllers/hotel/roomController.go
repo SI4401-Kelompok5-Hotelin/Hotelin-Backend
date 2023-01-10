@@ -113,3 +113,38 @@ func DeleteRoom(c *fiber.Ctx) error {
 		"message": "Room deleted",
 	})
 }
+
+func GetRoomByHotelID(c *fiber.Ctx) error {
+	room := []models.Room{}
+
+	id := c.Query("id")
+
+	err := database.DB.Where("hotel_id = ?", id).Find(&room).Error
+
+	// show all room in database with owner and don't show owner password
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Could not get room",
+		})
+	}
+
+	roomResponse := []models.RoomResponse{}
+
+	for _, room := range room {
+		roomResponse = append(roomResponse, models.RoomResponse{
+			ID:      				room.ID,
+			Name:    				room.Name,
+			Price:   				room.Price,
+			Description:  	room.Description,
+			HotelID: 				room.HotelID,
+		})
+	}
+
+	
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"message": "room found",
+		"data":    roomResponse,
+	})
+
+}
