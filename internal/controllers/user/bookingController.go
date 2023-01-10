@@ -38,9 +38,9 @@ func CreateBooking(c *fiber.Ctx) error {
 
 	var additionalPrice float64
 
-	if req.Covid == "Yes" {
+	if req.Covid == true {
 		additionalPrice = 31000
-	} else if req.Covid == "No" {
+	} else if req.Covid == false {
 		additionalPrice = 0
 	} else {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
