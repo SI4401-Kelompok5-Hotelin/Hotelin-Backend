@@ -17,7 +17,7 @@ type Booking struct {
 		RoomID			string		`json:"room_id"`
 		RoomName		string		`json:"room_name"`
 		Room				Room			`json:"room" gorm:"foreignKey:RoomID"`
-		Covid				string		`json:"covid"`
+		Covid				bool			`json:"covid"`
 		TotalPrice	float64		`json:"total_price"`
 		Duration		int				`json:"duration"`
 		CheckIn			string		`json:"check_in"`
@@ -33,7 +33,7 @@ func (u *Booking) BeforeCreate(tx *gorm.DB) (err error) {
 type BookingRequest struct {
 		HotelID		string		`json:"hotel_id"`
 		RoomID		string		`json:"room_id"`
-		Covid			string		`json:"covid"`
+		Covid			bool			`json:"covid"`
 		Duration	int				`json:"duration"`
 		CheckIn		string		`json:"check_in"`
 		CheckOut	string		`json:"check_out"`
