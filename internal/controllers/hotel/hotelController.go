@@ -21,7 +21,7 @@ func RegisterHotel(c *fiber.Ctx) error {
 		Name:       req.Name,
 		Email:			req.Email,
 		Phone:			req.Phone,
-		Address:		req.Phone,
+		Address:		req.Address,
 		Rating:			req.Rating,
 	}
 
