@@ -50,7 +50,7 @@ func CreateBooking(c *fiber.Ctx) error {
 
 	var totalPrice float64
 
-	totalPrice += room.Price + additionalPrice
+	totalPrice += (room.Price * float64(req.Duration)) + additionalPrice
 
 	booking := models.Booking{
 		UserID:			user.UserID,
