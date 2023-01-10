@@ -42,6 +42,7 @@ func Connect(c *Config) {
 		&models.Room{},
 		&models.UserBooking{},
 		&models.UserBalance{},
+		&models.Booking{},
 	)
 
 	if err != nil {

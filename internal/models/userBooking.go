@@ -3,6 +3,8 @@ package models
 import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
+
+	"time"
 )
 
 type UserBooking struct {
@@ -13,7 +15,11 @@ type UserBooking struct {
 		Hotel			Hotel		`json:"hotel" gorm:"foreignKey:HotelID"`
 		RoomID		string	`json:"room_id"`
 		Room			Room		`json:"room" gorm:"foreignKey:RoomID"`
+		BookingID	string	`json:"booking_id"`
+		Booking		Booking	`json:"booking" gorm:"foreignKey:BookingID"`
 		Duration	string	`json:"duration"`
+		CheckIn		time.Time	`json:"check_in"`
+		CheckOut	time.Time	`json:"check_out"`
 }
 
 func (u *UserBooking) BeforeCreate(tx *gorm.DB) (err error) {
