@@ -8,7 +8,7 @@ import (
 type Room struct {
 	ID      		string      `json:"id" gorm:"primaryKey, type:uuid, default:uuid_generate_v4()"`
 	Name    		string      `json:"name"`
-	Price   		int64     	`json:"price"`
+	Price   		float64     `json:"price"`
 	Description string			`json:"description"`
 	HotelID 		string      `json:"hotel_id"`
 	Hotel   		Hotel 			`json:"hotel" gorm:"foreignKey:HotelID"`
@@ -21,7 +21,7 @@ func (r *Room) BeforeCreate(tx *gorm.DB) (err error) {
 
 type RoomRequest struct {
 	Name    		string      `json:"name"`
-	Price   		int64     	`json:"price"`
+	Price   		float64     `json:"price"`
 	Description string			`json:"description"`
 	HotelID 		string      `json:"hotel_id"`
 }
@@ -29,7 +29,7 @@ type RoomRequest struct {
 type RoomResponse struct {
 	ID					string			`json:"id"`
 	Name    		string      `json:"name"`
-	Price   		int64     	`json:"price"`
+	Price   		float64     `json:"price"`
 	Description string			`json:"description"`
 	HotelID 		string      `json:"hotel_id"`
 }
