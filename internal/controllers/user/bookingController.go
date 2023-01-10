@@ -113,3 +113,27 @@ func CreateBooking(c *fiber.Ctx) error {
 		"data":    bookingResponse,
 	})
 }
+
+func DeleteBooking(c *fiber.Ctx) error {
+	id := c.Params("id")
+
+	var booking models.Booking
+
+	err := database.DB.First(&booking, id).Error
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Internal server error",
+		})
+	}
+
+	err = database.DB.Delete(&booking).Error
+	if err != nil {
+		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{
+			"message": "Internal server error",
+		})
+	}
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"message": "Booking deleted",
+	})
+}

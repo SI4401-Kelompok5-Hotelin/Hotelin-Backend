@@ -63,6 +63,7 @@ func Setup(app *fiber.App) {
 		},
 	}))
 	booking.Post("/create", user.CreateBooking)
+	booking.Delete("/delete", user.DeleteBooking)
 
 	// ================== End User =======================
 
