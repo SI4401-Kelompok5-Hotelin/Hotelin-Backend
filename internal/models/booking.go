@@ -19,7 +19,7 @@ type Booking struct {
 		Room				Room			`json:"room" gorm:"foreignKey:RoomID"`
 		Covid				string		`json:"covid"`
 		TotalPrice	float64		`json:"total_price"`
-		Duration		string		`json:"duration"`
+		Duration		int				`json:"duration"`
 		CheckIn			string		`json:"check_in"`
 		CheckOut		string		`json:"check_out"`
 		CreatedAt		time.Time	`json:"created_at"`
@@ -34,7 +34,7 @@ type BookingRequest struct {
 		HotelID		string		`json:"hotel_id"`
 		RoomID		string		`json:"room_id"`
 		Covid			string		`json:"covid"`
-		Duration	string		`json:"duration"`
+		Duration	int				`json:"duration"`
 		CheckIn		string		`json:"check_in"`
 		CheckOut	string		`json:"check_out"`
 }
@@ -43,8 +43,8 @@ type BookingResponse struct {
 		ID					string		`json:"id"`
 		HotelName		string		`json:"hotel_name"`
 		RoomName		string		`json:"room_name"`
-		Duration		string		`json:"duration"`
+		Duration		int				`json:"duration"`
 		TotalPrice	float64		`json:"total_price"`
 		CheckIn			string		`json:"check_in"`
-		CheckOut		string	`	json:"check_out"`
+		CheckOut		string		`json:"check_out"`
 }
