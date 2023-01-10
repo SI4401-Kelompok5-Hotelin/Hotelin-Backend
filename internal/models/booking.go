@@ -18,8 +18,8 @@ type Booking struct {
 		Covid				string		`json:"covid"`
 		TotalPrice	float64		`json:"total_price"`
 		Duration		string		`json:"duration"`
-		CheckIn			time.Time	`json:"check_in"`
-		CheckOut		time.Time	`json:"check_out"`
+		CheckIn			string		`json:"check_in"`
+		CheckOut		string		`json:"check_out"`
 		CreatedAt		time.Time	`json:"created_at"`
 }
 
@@ -33,8 +33,8 @@ type BookingRequest struct {
 		RoomID		string		`json:"room_id"`
 		Covid			string		`json:"covid"`
 		Duration	string		`json:"duration"`
-		CheckIn		time.Time	`json:"check_in"`
-		CheckOut	time.Time	`json:"check_out"`
+		CheckIn		string		`json:"check_in"`
+		CheckOut	string		`json:"check_out"`
 }
 
 type BookingResponse struct {
@@ -43,6 +43,6 @@ type BookingResponse struct {
 		RoomName		string		`json:"room_name"`
 		Duration		string		`json:"duration"`
 		TotalPrice	float64		`json:"total_price"`
-		CheckIn			time.Time	`json:"check_in"`
-		CheckOut		time.Time	`json:"check_out"`
+		CheckIn			string		`json:"check_in"`
+		CheckOut		string	`	json:"check_out"`
 }

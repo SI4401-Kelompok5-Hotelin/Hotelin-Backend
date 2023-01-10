@@ -14,13 +14,13 @@ func CreateBooking(c *fiber.Ctx) error {
 
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-			"message": "Invalid request",
+			"message": "Invalid request 1",
 		})
 	}
 
 	var hotel models.Hotel
 
-	err := database.DB.Where("hotel_id = ?", req.HotelID).First(&hotel).Error
+	err := database.DB.Where("id = ?", req.HotelID).Find(&hotel).Error
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"message": "Failed to create booking",
@@ -29,7 +29,7 @@ func CreateBooking(c *fiber.Ctx) error {
 	
 	var room models.Room
 
-	err = database.DB.Where("room_id = ?", req.RoomID).First(&room).Error
+	err = database.DB.Where("id = ?", req.RoomID).Find(&room).Error
 	if err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"message": "Failed to create booking",
@@ -44,7 +44,7 @@ func CreateBooking(c *fiber.Ctx) error {
 		additionalPrice = 0
 	} else {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-			"message": "Invalid request",
+			"message": "Invalid request 2",
 		})
 	}
 
