@@ -14,7 +14,7 @@ func CreateBooking(c *fiber.Ctx) error {
 
 	if err := c.BodyParser(&req); err != nil {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-			"message": "Invalid request 1",
+			"message": "Invalid request",
 		})
 	}
 
@@ -44,7 +44,7 @@ func CreateBooking(c *fiber.Ctx) error {
 		additionalPrice = 0
 	} else {
 		return c.Status(http.StatusBadRequest).JSON(fiber.Map{
-			"message": "Invalid request 2",
+			"message": "Invalid request",
 		})
 	}
 
