@@ -102,6 +102,7 @@ func CreateBooking(c *fiber.Ctx) error {
 
 	bookingResponse := models.BookingResponse{
 		ID:					booking.ID,
+		HotelID:		hotel.ID,
 		HotelName:	hotel.Name,
 		RoomName:		room.Name,
 		Duration:		booking.Duration,
@@ -158,6 +159,7 @@ func ShowAllBooking(c *fiber.Ctx) error {
 	for _, booking := range booking {
 		bookingResponse = append(bookingResponse, models.BookingResponse{
 		ID:					booking.ID,
+		HotelID:		booking.HotelID
 		HotelName:	booking.HotelName,
 		RoomName:		booking.RoomName,
 		Duration:		booking.Duration,
